@@ -18,25 +18,52 @@ function isCounterDivisibleBy2 () {
   return counter%2 == 0
 }
 
-function isCounterDivisibleBy7 () {
-  return counter%7 == 0
+function isDivisibleBy2(toDivide) {
+  return toDivide%2 == 0
 }
 
-function isCounterDivisibleBy10 () {
-  return counter%10 == 0
+//Defind your state machine in json
+let options = {
+  initalState: 'first',
+  states: [{
+    name: 'first',
+    transitions: [
+      {
+        condition: {
+          testFunction: isCounterDivisibleBy2
+        },
+        moveTo: 'second'
+      }
+    ],
+    onEnter: ()=>{console.log("Entering the first state")},
+    beforeExit: ()=>{console.log("leaving the first state")}
+  },
+  {
+    name: 'second',
+    transitions: [
+      {
+        condition: {
+          testFunction: isDivisibleBy2,
+          params: [counter]
+        },
+        moveTo: 'first'
+      }
+    ],
+    onEnter: ()=>{console.log("Entering the second state")},
+    beforeExit: ()=>{console.log("leaving the second state")}
+  }
+  ]
 }
 
-let firstState = new State("first", new Transition("second", isCounterDivisibleBy2), new Transition("second", isCounterDivisibleBy7))
-let secondState = new State("second", new Transition("first", isCounterDivisibleBy10))
-
-let fsm = new FSM(firstState, secondState)
+//create your fsm
+let fsm = new FSM(options)
 
 
 
 
 
 
-
+//node input handling
 consolePrompt.on('line', function(line) {
     counter += Number.parseInt(line)
     fsm.next()
