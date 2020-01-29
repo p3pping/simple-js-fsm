@@ -5,7 +5,7 @@ class FSM {
   constructor(options) {
     this.states = {}
 
-    options.states.forEach(state => {      
+    options.states.forEach(state => {
       this.states[state.name] = new State(state.name, state.transitions, {onEnter: state.onEnter, beforeExit: state.beforeExit})
     })
 

@@ -8,7 +8,7 @@ class Transition{
   }
 
   shouldTransition() {
-    let hasParams = this.condition.hasOwnProperty('params')    
+    let hasParams = this.condition.hasOwnProperty('params')
     return hasParams ? this.condition.testFunction(...this.condition.params) : this.condition.testFunction()
   }
 }
